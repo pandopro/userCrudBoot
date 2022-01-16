@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html lang="en">
+<head>
+    <script src="webjars/jquery/jquery.min.js"></script>
+    <script src="webjars/popper.js/umd/popper.min.js"></script>
+    <script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+    <link href="webjars/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <script src="static/table.js"></script>
+    <title>admin</title>
+</head>
+<body style="background-color: #f4f4f4">
+
+<nav class="navbar navbar-dark  bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+        <span>User "</span><span th:text="${user.email}"/><span>" with roles: </span>
+        <span th:each="role : ${user.roles}">
+           <span th:text="${role.role} "> </span>
+        </span>
+
+    </a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" th:href="@{/logout}">Sign out</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid ">
+
+    <div class="row min-vh-100">
+        <div class="col-3" style="background-color: white">
+            <nav>
+                <div class="nav nav-pills flex-column mt-3" id="nav-tab-p" role="tablist">
+                    <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="nav-item nav-link active "
+                       id="nav-home-tab-p" data-bs-toggle="tab" href="#nav-home-p"
+                       role="tab" aria-controls="nav-home" aria-selected="true">
+                        Admin
+                    </a>
+                    <a sec:authorize="hasAnyAuthority('ROLE_USER')" class="nav-item nav-link  " id="nav-profile-tab-p"
+                       data-bs-toggle="tab" href="#nav-profile-p" role="tab"
+                       aria-controls="nav-profile" aria-selected="false">
+                        User
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+        <div class="col mt-3"><h2>Admin panel</h2>
+            <div class="tab-content" id="nav-tabContent-p">
+                <div class="tab-pane fade show active " id="nav-home-p" role="tabpanel"
+                     aria-labelledby="nav-home-tab-p">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link border active" id="nav-home-tab" data-bs-toggle="tab"
+                           href="#nav-home"
+                           role="tab" aria-controls="nav-home" aria-selected="true">
+                            Users table
+                        </a>
+                        <a class="nav-item nav-link border" id="nav-profile-tab" data-bs-toggle="tab"
+                           href="#nav-profile" role="tab"
+                           aria-controls="nav-profile" aria-selected="false">
+                            Add new user
+                        </a>
+                    </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active border rounded" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <div class="container ">
+                                <div class="row border rounded" style="height: 50px">
+                                    <div class="d-flex align-items-center ml-4" style="font-size: 30px">
+                                        All users
+                                    </div>
+                                </div>
+                                <div class="row" style="background-color: white">
+                                    <div class="container m-3">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Age</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="users">
+
+                                            </tbody>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade border rounded" id="nav-profile" role="tabpanel"
+                             aria-labelledby="nav-profile-tab">
+                            <div class="container ">
+                                <div class="row border rounded" style="height: 50px">
+                                    <div class="d-flex align-items-center ml-4" style="font-size: 30px">
+                                        Add new user
+                                    </div>
+                                </div>
+                                <div class="row border rounded " style="background-color: white">
+                                    <div class="container m-3">
+                                        <div class="row justify-content-center ">
+                                            <div class="col-4">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="addName" class="text-center">First name</label>
+                                                        <input type="text" class="form-control" id="addName"
+                                                               name="name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="addLastName">Last name</label>
+                                                        <input type="text" class="form-control" id="addLastName"
+                                                               name="lastname">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="addAge">Age</label>
+                                                        <input type="number" class="form-control" id="addAge"
+                                                               name="age">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="addEmail">Email</label>
+                                                        <input type="email" class="form-control" id="addEmail"
+                                                               name="email" aria-describedby="emailHelp">
+                                                        <small id="emailHelp" class="form-text text-muted">We'll never
+                                                            share your email with anyone else.</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="addPassword">Password</label>
+                                                        <input type="password" class="form-control" id="addPassword"
+                                                               name="password">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="addRoles">roles</label>
+                                                        <select id="addRoles" class="form-control"
+                                                                th:size="${roles.size()}"
+                                                                multiple>
+                                                            <option class="form-control" th:each="role: ${roles}"
+                                                                    th:value="${role.role}"
+                                                                    th:text="${role.role}"></option>
+                                                        </select>
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary" onclick="addUser()">
+                                                        Add new user
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div sec:authorize="hasAnyAuthority('ROLE_USER')" class="tab-pane fade  " id="nav-profile-p"
+                     role="tabpanel" aria-labelledby="nav-profile-tab-p">
+                    <div class="container ">
+                        <div class="row" style="height: 100px">
+                            <div class="d-flex align-items-center ml-4" style="font-size: 60px">
+                                User information page
+                            </div>
+                        </div>
+                        <div class="row border rounded" style="height: 50px">
+                            <div class="d-flex align-items-center ml-4" style="font-size: 30px">
+                                About user
+                            </div>
+                        </div>
+                        <div class="row" style="background-color: white">
+                            <div class="container m-3">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>name</th>
+                                        <th>password</th>
+                                        <th>email</th>
+                                        <th>roles</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${user.name}"/>
+                                        <td th:text="${user.password}"/>
+                                        <td th:text="${user.email}"/>
+                                        <td>
+                                            <select name="roleIds" th:size="${user.roles.size()}" disabled>
+                                                <option th:each="role: ${user.roles}" th:value="${role.id}"
+                                                        th:text="${role.role}"></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEditLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalEditLabel">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <form name="id" value="id" id="editModalUser">
+                                <div class="form-group">
+                                    <fieldset disabled>
+                                        <label for="editName" class="text-center">ID</label>
+                                        <input type="text" class="form-control" id="editId">
+                                    </fieldset>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editName" class="text-center">First name</label>
+                                    <input type="text" class="form-control" id="editName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editName" class="text-center">Last name</label>
+                                    <input type="text" class="form-control" id="editLastName" name="lastname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editAge">Age</label>
+                                    <input type="number" class="form-control" id="editAge" value=""
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label for="editEmail">email</label>
+                                    <input type="text" class="form-control" id="editEmail" name="email"
+                                           aria-describedby="emailHelp1" value="">
+                                    <small id="emailHelp1" class="form-text text-muted">We'll never share your email
+                                        with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPassword">Password</label>
+                                    <input type="password" class="form-control" id="editPassword" value=""
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label for="editRoles">roles</label>
+                                    <select id="editRoles" class="form-control" th:size="${roles.size()}"
+                                            multiple>
+                                        <option class="form-control" th:each="role: ${roles}"
+                                                th:value="${role.role}" th:text="${role.role}"></option>
+                                    </select>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
