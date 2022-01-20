@@ -1,8 +1,6 @@
 package com.stecenko.userCrudBoot.model;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class UserDTO {
     private long id;
@@ -13,23 +11,32 @@ public class UserDTO {
     private String password;
     private String roles;
 
-    public static User userDTOtoUser(UserDTO userDTO, User user) {
+    public static User userDTOtoUser(UserDTO userDTO, User user, List<Role> roles) {
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setLastname(userDTO.getLastname());
         user.setAge(userDTO.getAge());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-        Set<Role> roles = new HashSet();
-        if (userDTO.getRoles() != null && userDTO.getRoles().contains(",")) {
-            for (String role : userDTO.getRoles().split(",")) {
-                roles.add(new Role(role));
+        Set<Role> userRoles = new HashSet<>();
+        for (Role role : roles) {
+            System.out.println("1)role "+role.getRole());
+            if ( userDTO.getRoles() != null && userDTO.getRoles().contains(role.getRole())){
+                userRoles.add(role);
+                System.out.println("win "+role.toString());
             }
-            user.setRoles(roles);
-        } else if (userDTO.getRoles() != null) {
-            roles.add(new Role(userDTO.getRoles()));
-            user.setRoles(roles);
         }
+        user.setRoles(userRoles);
+//        Set<Role> roles = new HashSet();
+//        if (userDTO.getRoles() != null && userDTO.getRoles().contains(",")) {
+//            for (String role : userDTO.getRoles().split(",")) {
+//                roles.add(new Role(role));
+//            }
+//            user.setRoles(roles);
+//        } else if (userDTO.getRoles() != null) {
+//            roles.add(new Role(userDTO.getRoles()));
+//            user.setRoles(roles);
+//        }
         return user;
     }
 
