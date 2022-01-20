@@ -21,8 +21,7 @@ public class AdminRestController {
     }
 
     @GetMapping("/all")
-    public  ResponseEntity<Iterable<User>> getUsers() {
-       // return userService.listUsers();
+    public ResponseEntity<Iterable<User>> getUsers() {
         return new ResponseEntity<Iterable<User>>(
                 userService.listUsers(),
                 HttpStatus.OK);
@@ -32,7 +31,6 @@ public class AdminRestController {
 
     public ResponseEntity editUser(UserDTO user) {
         userService.update(user);
-      //  return user.getEmail();
         return new ResponseEntity(
                 HttpStatus.OK);
     }
@@ -40,7 +38,6 @@ public class AdminRestController {
     @GetMapping("/delete/{id}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        //return id;
         return new ResponseEntity<>(
                 id,
                 HttpStatus.OK);
@@ -49,17 +46,12 @@ public class AdminRestController {
     @PostMapping("/add")
     public ResponseEntity addUser(UserDTO user) {
         userService.add(user);
-        System.out.println("------------------------------");
-        System.out.println(user.toString());
-        System.out.println("------------------------------");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
-        //   return userService.get(id);
         return new ResponseEntity<>(
-                //  "Your age is " + calculateAge(yearOfBirth),
                 userService.get(id),
                 HttpStatus.OK);
     }

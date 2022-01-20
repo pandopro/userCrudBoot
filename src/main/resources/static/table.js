@@ -1,5 +1,3 @@
-var userLogId = $("#forOne").val();
-//getAttribute("user").id;
 $(document).ready(function () {
     refreshTable();
 
@@ -10,9 +8,9 @@ function rolesfortable(data) {
     data.map(n => str += " " + n.role);
     return str;
 }
-function fullingTableForOneUser(data){
+
+function fullingTableForOneUser(data) {
     $("#forOneUser").empty();
-    //data.map(n => rolesfortable(n.roles));
     $('#forOneUser').append(`
         <tr>
       <td>${data.id}</td>
@@ -21,12 +19,11 @@ function fullingTableForOneUser(data){
       <td>${data.age}</td>
       <td>${data.email}</td>
 <td> ${rolesfortable(data.roles)}</td>
-<!--     rol-->
     </tr>`)
 }
+
 function fullingTable(data) {
     $("#users").empty();
-  //  data.map(n => rolesfortable(n.roles));
     $('#users').append(`
       ${data.map(n => `
         <tr>
@@ -36,7 +33,6 @@ function fullingTable(data) {
       <td>${n.age}</td>
       <td>${n.email}</td>
 <td> ${rolesfortable(n.roles)}</td>
-<!--     rol-->
       <td>  
        <button type="button"  name="userEditCallModal" onclick="buttonEdit(${n.id})"
                                 value="${n.id}"
@@ -54,10 +50,8 @@ function fullingTable(data) {
 
 function buttonDelete(user_id) {
 
-    $.ajax("/rest/admin/get/"+user_id, {
+    $.ajax("/rest/admin/get/" + user_id, {
             method: "get",
-         //   data: {id: user_id},
-          //  dataType: "json",
             success: function (user) {
                 $("#modalEdit").modal('show');
                 $("#editId").val(user.id);
@@ -83,23 +77,17 @@ function buttonDelete(user_id) {
 function deleteUserRest() {
 
     const user_id = $("#submitDelBTN").val();
-   // console.log("deleteUserRest " + user_id);
-    $.ajax("/rest/admin/delete/"+user_id, {
-       // data: {id: user_id},
+    $.ajax("/rest/admin/delete/" + user_id, {
         method: "get",
-       // dataType: "json",
         success: function () {
-            // allUsers = msg;
             refreshTable();
         }
     });
 }
 
 function buttonEdit(user_id) {
-    $.ajax("/rest/admin/get/"+user_id, {
+    $.ajax("/rest/admin/get/" + user_id, {
             method: "get",
-         //   data: {id: user_id},
-           // dataType: "json",
             success: function (user) {
                 $("#modalEdit").modal('show');
                 $("#editId").val(user.id);
@@ -122,16 +110,16 @@ function buttonEdit(user_id) {
     )
 };
 
- function  editUser() {
-     let usr = {
-         id: $("#editId").val(),
-         name: $("#editName").val(),
-         lastname: $("#editLastName").val(),
-         age: $("#editAge").val(),
-         email: $("#editEmail").val(),
-         password: $("#editPassword").val(),
-         roles: $("#editRoles").val(),
-     };
+function editUser() {
+    let usr = {
+        id: $("#editId").val(),
+        name: $("#editName").val(),
+        lastname: $("#editLastName").val(),
+        age: $("#editAge").val(),
+        email: $("#editEmail").val(),
+        password: $("#editPassword").val(),
+        roles: $("#editRoles").val(),
+    };
     $.ajax("/rest/admin/edit", {
         method: "post",
         data: usr,
@@ -140,40 +128,12 @@ function buttonEdit(user_id) {
         }
     });
 
-     //testEdit();
-     setTimeout(refreshTable(), 10000);
-     refreshTable()
+    setTimeout(refreshTable(), 10000);
+    refreshTable()
 }
-// async function  testEdit(){
-//      let usr = {
-//          id: $("#editId").val(),
-//          name: $("#editName").val(),
-//          lastname: $("#editLastName").val(),
-//          age: $("#editAge").val(),
-//          email: $("#editEmail").val(),
-//          password: $("#editPassword").val(),
-//          roles: $("#editRoles").val(),
-//      };
-//      // console.log(usr)
-//      await fetch("/rest/admin/edit", {
-//     method: 'POST',
-//     body: JSON.stringify(usr),
-//     // headers: {
-//     //     'Content-Type': 'application/json',
-//     //     'Accept': 'application/json'
-//     // }
-// });
-// }
 
- function   addUser() {
-    // console.log(JSON.stringify({
-    //     name: $("#addName").val(),
-    //     lastname: $("#addLastName").val(),
-    //     age: $("#addAge").val(),
-    //     email: $("#addEmail").val(),
-    //     password: $("#addPassword").val(),
-    // }));
-   $.ajax("/rest/admin/add", {
+function addUser() {
+    $.ajax("/rest/admin/add", {
         method: "post",
         data:
             {
@@ -196,8 +156,8 @@ function buttonEdit(user_id) {
     $("#addEmail").val("");
     $("#addPassword").val("");
     $("#addRoles").val("");
-     setTimeout(refreshTable(), 10000);
-     refreshTable()
+    setTimeout(refreshTable(), 10000);
+    refreshTable()
 }
 
 function refreshTable() {
@@ -210,7 +170,7 @@ function refreshTable() {
         }
 
     });
-    $.ajax("/rest/user/get/"+$("#forOne").val(), {
+    $.ajax("/rest/user/get/" + $("#forOne").val(), {
         dataType: "json",
         success: function (msg) {
             fullingTableForOneUser(msg);

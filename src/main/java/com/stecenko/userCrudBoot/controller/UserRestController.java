@@ -22,9 +22,7 @@ public class UserRestController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
-        //   return userService.get(id);
         return new ResponseEntity<>(
-                //  "Your age is " + calculateAge(yearOfBirth),
                 userService.get(id),
                 HttpStatus.OK);
     }

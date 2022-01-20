@@ -29,12 +29,7 @@ public class MainController {
     @GetMapping(value = "/admin")
     public String adminGet(ModelMap model, HttpSession httpSession) {
         model.addAttribute("user", httpSession.getAttribute("user"));
-        List<Role> allRoles = new ArrayList<>();
-      //  allRoles = userService.allRoles();
-
-        allRoles = roleService.allRoles();
-//        allRoles.add(new Role("ROLE_USER"));
-//        allRoles.add(new Role("ROLE_ADMIN"));
+        List<Role> allRoles = roleService.allRoles();
         model.addAttribute("roles", allRoles);
         return "admin";
     }

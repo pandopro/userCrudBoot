@@ -20,23 +20,13 @@ public class UserDTO {
         user.setPassword(userDTO.getPassword());
         Set<Role> userRoles = new HashSet<>();
         for (Role role : roles) {
-            System.out.println("1)role "+role.getRole());
-            if ( userDTO.getRoles() != null && userDTO.getRoles().contains(role.getRole())){
+            System.out.println("1)role " + role.getRole());
+            if (userDTO.getRoles() != null && userDTO.getRoles().contains(role.getRole())) {
                 userRoles.add(role);
-                System.out.println("win "+role.toString());
+                System.out.println("win " + role.toString());
             }
         }
         user.setRoles(userRoles);
-//        Set<Role> roles = new HashSet();
-//        if (userDTO.getRoles() != null && userDTO.getRoles().contains(",")) {
-//            for (String role : userDTO.getRoles().split(",")) {
-//                roles.add(new Role(role));
-//            }
-//            user.setRoles(roles);
-//        } else if (userDTO.getRoles() != null) {
-//            roles.add(new Role(userDTO.getRoles()));
-//            user.setRoles(roles);
-//        }
         return user;
     }
 
